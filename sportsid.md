@@ -1,0 +1,13 @@
+0 baseball
+1 basketballMens
+2 basketballWomens
+3 crosscountry
+4 football
+5 golfMens
+6 golfWomens
+7 soccerWomens
+8 softball
+9 tennisMens
+10 tennisWomens
+11 trackfield
+11 volleyball
