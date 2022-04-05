@@ -1,4 +1,6 @@
+// Run server on PORT:
 const PORT = 8000
+// Dependencies
 const axios = require('axios')
 const express = require('express')
 const cheerio = require('cheerio')
@@ -10,7 +12,7 @@ app.listen(PORT, () => console.log(`server running on PORT ${PORT}`))
 
 
 
-function splitStrByLine(schedule_txt){
+function splitStrByLine(schedule_txt){  // Splits the text by line
     const lineArray = schedule_txt.split("\n")
     return lineArray
 }
@@ -19,13 +21,10 @@ function teamStatsSplit(lineArray, teamStats){
 
 }
 
-function wordSplit(lineArray, teamHasStats){
-    if (teamHasStats == 1){
-
-    }
-    for (let i = 0; i < lineArray.length; i++){
-        if (teamHasStats == 1){
-            console.log(i)
+function wordSplit(lineArray, teamHasStats){    // Splits each line into each statistic
+    for (let i = 0; i < lineArray.length; i++){     // Loops through lines
+        console.log(i)
+        if (teamHasStats == 1){     // If the team has stats, post those stats
             if (lineArray[i].startsWith("Overall", 1)){
                 let wordArray = lineArray[i].split(" ")
                 for (let i = 0; i < wordArray.length; i++){
@@ -36,7 +35,7 @@ function wordSplit(lineArray, teamHasStats){
     }
 }
 
-function processScheduleText(schedule_txt, teamHasStats){
+function processScheduleText(schedule_txt, teamHasStats){   // Processes given text into database
     const lineArray = splitStrByLine(schedule_txt)
     for (let i = 0; i < lineArray.length; i++){
         console.log(lineArray[i])
@@ -46,7 +45,7 @@ function processScheduleText(schedule_txt, teamHasStats){
 
 
 
-let sportID =  1
+let sportID =  1    // Will be input
 let teamHasStats = 1
 let url = ''
 
@@ -97,24 +96,24 @@ switch(sportID){
     default:
         console.log("Error.")
 }
-let classes = '.main-content-placeholder.main-content-placeholder__wrap.sidearm-schedule-template-1 sidearm-schedule sidearm-common.schedule-view-container.sidearm-schedule-template-header flex row flex-column large-flex-row flex-align-center large-flex-justify-between noprint.sidearm-schedule-select flex x-small-12 flex-item-1 flex-wrap flex-align-center.sidearm-schedule-select-list flex flex-wrap.sidearm-schedule-header-text flex text-no-wrap'
-axios.get(url)
+axios.get(url)      // Grab HTML from given link
     .then(response => {
         response = response.data
-        const $ = cheerio.load(response)
+        const $ = cheerio.load(response)    // Load HTML
         url = 'https://hailstate.com'
+        // Find button with link to text schedule
         let extension = $('li[class="sidearm-schedule-header-text flex text-no-wrap"]', response).find('a').attr('href')
         let teamID = ''
-        for(let i = 37; i < extension.length; i++){
+        for(let i = 37; i < extension.length; i++){     // Set teamID to number of the text schedule
             teamID += extension[i]
         }
         teamID = parseInt(teamID)
         console.log('teamID = ' + teamID)
         url += extension
         console.log(url)
-        axios.get(url)
+        axios.get(url)      // Grab text from given URL
             .then(response => {
                 const schedule_txt = response.data
-                processScheduleText(schedule_txt, teamHasStats)
+                processScheduleText(schedule_txt, teamHasStats)     // Process text
             }).catch(err => console.log(err))
     }).catch(err => console.log(err))
