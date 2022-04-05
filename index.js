@@ -1,13 +1,16 @@
-// Run server on PORT:
+// Specify PORT to run server on
 const PORT = 8000
-// Dependencies
+
+// Require
 const axios = require('axios')
 const express = require('express')
 const cheerio = require('cheerio')
-const { response } = require('express')
+const pool = require("./db")
 
+// Run Express library
 const app = express()
 
+// Start server on PORT
 app.listen(PORT, () => console.log(`server running on PORT ${PORT}`))
 
 
@@ -45,52 +48,52 @@ function processScheduleText(schedule_txt, teamHasStats){   // Processes given t
 
 
 
-let sportID =  1    // Will be input
+let sportID =  6    // Will be input
 let teamHasStats = 1
 let url = ''
 
 switch(sportID){
-    case 0:
+    case 1:
         url = 'https://hailstate.com/sports/baseball/schedule'
         break
-    case 1:
+    case 2:
         url = 'https://hailstate.com/sports/mens-basketball/schedule'
         break
-    case 2:
+    case 3:
         url = 'https://hailstate.com/sports/womens-basketball/schedule'
         break
-    case 3:
+    case 4:
         url = 'https://hailstate.com/sports/cross-country/schedule'
         teamHasStats = 0;
         break
-    case 4:
+    case 5:
         url = 'https://hailstate.com/sports/football/schedule'
         break
-    case 5:
+    case 6:
         url = 'https://hailstate.com/sports/mens-golf/schedule'
         teamHasStats = 0;
         break
-    case 6:
+    case 7:
         url = 'https://hailstate.com/sports/womens-golf/schedule'
         teamHasStats = 0;
         break
-    case 7:
+    case 8:
         url = 'https://hailstate.com/sports/womens-soccer/schedule'
         break
-    case 8:
+    case 9:
         url = 'https://hailstate.com/sports/softball/schedule'
         break
-    case 9:
+    case 10:
         url = 'https://hailstate.com/sports/mens-tennis/schedule'
         break
-    case 10:
+    case 11:
         url = 'https://hailstate.com/sports/womens-tennis/schedule'
         break
-    case 11:
+    case 12:
         url = 'https://hailstate.com/sports/track-and-field/schedule'
         teamHasStats = 0;
         break
-    case 12:
+    case 13:
         url = 'https://hailstate.com/sports/womens-volleyball/schedule'
         break
     default:
