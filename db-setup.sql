@@ -1,5 +1,7 @@
+CREATE DATABASE msstatesportshub;
+
 CREATE TABLE sport (
-	sport_id INT PRIMARY KEY,
+	sport_id SERIAL PRIMARY KEY,
 	sport VARCHAR(255) NOT NULL UNIQUE
 );
 CREATE TABLE team (
@@ -35,3 +37,16 @@ CREATE TABLE game (
 	team_score INT,
 	opponent_score INT
 );
+insert into sport values (DEFAULT, 'baseball');
+insert into sport values (DEFAULT, 'basketballMens');
+insert into sport values (DEFAULT, 'basketballWomens');
+insert into sport values (DEFAULT, 'crosscountry');
+insert into sport values (DEFAULT, 'football');
+insert into sport values (DEFAULT, 'golfMens');
+insert into sport values (DEFAULT, 'golfWomens');
+insert into sport values (DEFAULT, 'soccerWomens');
+insert into sport values (DEFAULT, 'softball');
+insert into sport values (DEFAULT, 'tennisMens');
+insert into sport values (DEFAULT, 'tennisWomens');
+insert into sport values (DEFAULT, 'trackfield');
+insert into sport values (DEFAULT, 'volleyball');
