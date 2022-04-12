@@ -6,12 +6,20 @@ const axios = require('axios')
 const express = require('express')
 const cheerio = require('cheerio')
 const pool = require("./db")
+const client = require('pg/lib/native/client')
 
 // Run Express library
 const app = express()
 
 // Start server on PORT
 app.listen(PORT, () => console.log(`server running on PORT ${PORT}`))
+
+//Connect to database
+pool.connect()
+    .then(() => console.log("Connected Successfully"))
+    .then(() => pool.query())
+    .catch(e => console.log(e))
+    .finally(() => pool.end())
 
 
 
