@@ -17,7 +17,8 @@ app.listen(PORT, () => console.log(`server running on PORT ${PORT}`))
 //Connect to database
 pool.connect()
     .then(() => console.log("Connected Successfully"))
-    .then(() => pool.query())
+    .then(() => pool.query("select * from team"))
+    .then(results => console.table(results.rows))
     .catch(e => console.log(e))
     .finally(() => pool.end())
 
@@ -38,8 +39,11 @@ function wordSplit(lineArray, teamHasStats){    // Splits each line into each st
         if (teamHasStats == 1){     // If the team has stats, post those stats
             if (lineArray[i].startsWith("Overall", 1)){
                 let wordArray = lineArray[i].split(" ")
-                for (let i = 0; i < wordArray.length; i++){
-                    console.log(wordArray[i])
+                for (let j = 0; j < wordArray.length; j++){
+                    wordArray[j].replace(/\s+/g, '')
+                    if (!wordArray[j].startsWith(" ")){
+                        console.log("Overall: " + wordArray[j]) // CURRENT WORK!!!!!!!!!!!
+                    }
                 }
             }
         }
@@ -56,7 +60,7 @@ function processScheduleText(schedule_txt, teamHasStats){   // Processes given t
 
 
 
-let sportID =  6    // Will be input
+let sportID =  1    // Will be input
 let teamHasStats = 1
 let url = ''
 
