@@ -29,25 +29,99 @@ function splitStrByLine(schedule_txt){  // Splits the text by line
     return lineArray
 }
 
-function teamStatsSplit(lineArray, teamStats){
-
-}
-
 function wordSplit(lineArray, teamHasStats){    // Splits each line into each statistic
-    for (let i = 0; i < lineArray.length; i++){     // Loops through lines
+    let teamStats = []
+    for (let i = 0; i < lineArray.length; i++){     // Iterates through lines
         console.log(i)
-        if (teamHasStats == 1){     // If the team has stats, post those stats
-            if (lineArray[i].startsWith("Overall", 1)){
+        if (teamHasStats){
+            if (lineArray[i].startsWith("Overall", 1)){     // teamStats[0], teamStats[1]
                 let wordArray = lineArray[i].split(" ")
                 for (let j = 0; j < wordArray.length; j++){
                     wordArray[j].replace(/\s+/g, '')
-                    if (!wordArray[j].startsWith(" ")){
-                        console.log("Overall: " + wordArray[j]) // CURRENT WORK!!!!!!!!!!!
+                    if (wordArray[j].match(/^\d/)){     // checks if string starts with a number
+                        teamStats[0] = wordArray[j]
+                    }
+                    else if (wordArray[j].startsWith(".")){     // checks if string starts with '.'
+                        teamStats[1] = wordArray[j]
+                    }
+                }
+            }
+            else if (lineArray[i].startsWith("Conference", 1)){  // teamStats[2], teamStats[3]
+                let wordArray = lineArray[i].split(" ")
+                for (let j = 0; j < wordArray.length; j++){
+                    wordArray[j].replace(/\s+/g, '')
+                    if (wordArray[j].match(/^\d/)){
+                        teamStats[2] = wordArray[j]
+                    }
+                    else if (wordArray[j].startsWith(".")){
+                        teamStats[3] = wordArray[j]
+                    }
+                }
+            }
+            else if (lineArray[i].startsWith("Streak", 1)){      // teamStats[4]
+                let wordArray = lineArray[i].split(" ")
+                for (let j = 0; j < wordArray.length; j++){
+                    if (wordArray[j].startsWith("W") || wordArray[j].startsWith("L")){
+                        teamStats[4] = wordArray[j]
+                    }
+                }
+            }
+            else if (lineArray[i].startsWith("Home", 1)){  // teamStats[5]
+                let wordArray = lineArray[i].split(" ")
+                for (let j = 0; j < wordArray.length; j++){
+                    wordArray[j].replace(/\s+/g, '')
+                    if (wordArray[j].match(/^\d/)){
+                        teamStats[5] = wordArray[j]
+                    }
+                }
+            }
+            else if (lineArray[i].startsWith("Away", 1)){  // teamStats[6]
+                let wordArray = lineArray[i].split(" ")
+                for (let j = 0; j < wordArray.length; j++){
+                    wordArray[j].replace(/\s+/g, '')
+                    if (wordArray[j].match(/^\d/)){
+                        teamStats[6] = wordArray[j]
+                    }
+                }
+            }
+            else if (lineArray[i].startsWith("Neutral", 1)){  // teamStats[7]
+                let wordArray = lineArray[i].split(" ")
+                for (let j = 0; j < wordArray.length; j++){
+                    wordArray[j].replace(/\s+/g, '')
+                    if (wordArray[j].match(/^\d/)){
+                        teamStats[7] = wordArray[j]
                     }
                 }
             }
         }
     }
+    console.log("teamStats: ", teamStats)
+    let lineOfScheduleStart = 0;
+    for (i = 0; i < lineArray.length; i++){     // Iterates through lines until reaching game stats
+        console.log(i)
+        if (lineArray[i].startsWith("Date", 1)){
+            lineOfScheduleStart = i + 1
+            break
+        }
+    }
+    let games = []
+    let gameNum = 0
+    for (i = lineOfScheduleStart; i < lineArray.length; i++){     // Iterates through games
+        console.log(i)
+        let gameStats = []
+        let statNum = 0
+        let wordArray = lineArray[i].split('  ')
+        for (let j = 0; j < wordArray.length; j++){     // Iterates through game stats
+            if (wordArray[j].replace(/\s+/g, '').length){
+                wordArray[j] = wordArray[j].replace(/^\s+/g, '')
+                gameStats[statNum] = wordArray[j]
+                statNum++
+            }
+        }
+        games[gameNum] = gameStats
+        gameNum++
+    }
+    console.log(games)
 }
 
 function processScheduleText(schedule_txt, teamHasStats){   // Processes given text into database
