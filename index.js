@@ -17,7 +17,7 @@ app.listen(PORT, () => console.log(`server running on PORT ${PORT}`))
 //Connect to database
 pool.connect()
     .then(() => console.log("Connected Successfully"))
-    .then(() => pool.query("select * from team"))
+    .then(() => pool.query("select * from sport"))
     .then(results => console.table(results.rows))
     .catch(e => console.log(e))
     .finally(() => pool.end())
